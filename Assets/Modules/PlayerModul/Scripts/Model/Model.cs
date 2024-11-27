@@ -8,8 +8,19 @@ public class Model : MonoBehaviour
 
     private void Awake()
     {
+        Init();
+    }
+
+    private void Init()
+    {
         mediaURLs = JsonController<MediaURLs>.LoadFromResources("MediaURLs.json");
         Debug.Log(mediaURLs.URLs[0].Name);
+
+        for (int i = 0; i < mediaURLs.URLs.Length; i++)
+        {
+            StartCoroutine(ServerManager.LoadFileFromServer(mediaURLs.URLs[i].ImgURLs, i + ".jpg", "/Previews/"));
+        }
+
     }
 
 }
