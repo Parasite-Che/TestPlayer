@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using RenderHeads.Media.AVProVideo;
 
 public class VideoListController : MonoBehaviour
 {
@@ -10,25 +11,46 @@ public class VideoListController : MonoBehaviour
 
     [SerializeField]
     private List<Transform> videoList;
+    [SerializeField]
+    private TMP_Text curentVideoNameObj;
 
-    private void Awake()
+    private void Start()
     {
-        videoList = GetChilds(transform);
         Init();
     }
 
     private void Init()
     {
+        videoList = GetChilds(transform);
+
         mediaURLs = JsonController<MediaURLs>.LoadFromResources("MediaURLs.json");
         for (int i = 0; i < mediaURLs.URLs.Length; i++)
         {
             videoList[i].GetChild(1).GetComponent<TMP_Text>().text = mediaURLs.URLs[i].Name;
+
+            VideoPlayButton videoPlayButton = videoList[i].gameObject.AddComponent<VideoPlayButton>();
+            videoPlayButton.VideoURL = mediaURLs.URLs[i].VideoURLs;
+            videoPlayButton.CurentVideoNameObj = curentVideoNameObj;
+            videoPlayButton.VideoName = mediaURLs.URLs[i].Name;
+
             StartCoroutine(PictureLoader(videoList[i].GetChild(0).GetChild(0).gameObject));
             StartCoroutine(ServerManager.LoadFileFromServer(
                 mediaURLs.URLs[i].ImgURLs, 
                 i + ".jpg", 
                 "/Previews/",
                 EndLoading(videoList[i], "/Previews/" + i + ".jpg", null)));
+        }
+    }
+
+    public void FirstClick()
+    {
+        if (AVProController.Instance.DisplayUGUI().CurrentMediaPlayer.MediaPath.Path == "")
+        {
+            AVProController.Instance.DisplayUGUI().CurrentMediaPlayer.OpenMedia(
+                new MediaPath(mediaURLs.URLs[0].VideoURLs, MediaPathType.AbsolutePathOrURL),
+                autoPlay: false);
+            AVProController.Instance.PlayVideo();
+            curentVideoNameObj.text = mediaURLs.URLs[0].Name;
         }
     }
 
@@ -57,7 +79,7 @@ public class VideoListController : MonoBehaviour
 
 }
 
-struct MediaURLs
+public struct  MediaURLs
 {
 
     public (string Name, string ImgURLs, string VideoURLs)[] URLs { get; set; }

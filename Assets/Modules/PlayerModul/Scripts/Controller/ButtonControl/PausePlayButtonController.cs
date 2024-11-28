@@ -12,7 +12,7 @@ public class PausePlayButtonController : MonoBehaviour
     [SerializeField]
     private bool isPlaying = false;
 
-    private void Awake()
+    private void Start()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(ButtonLogic);
 
@@ -26,29 +26,39 @@ public class PausePlayButtonController : MonoBehaviour
         {
             Debug.LogError("Error: " + code);
         }
-        if (eventType == MediaPlayerEvent.EventType.FinishedPlaying 
-            || eventType == MediaPlayerEvent.EventType.Paused 
-            || eventType == MediaPlayerEvent.EventType.Started
-            || eventType == MediaPlayerEvent.EventType.Unpaused)
+        else if (eventType == MediaPlayerEvent.EventType.FinishedPlaying)
         {
             ButtonLogic();
         }
+        else if (eventType == MediaPlayerEvent.EventType.FirstFrameReady)
+        {
+            //Pause();
+        }
     }
-
 
     private void ButtonLogic()
     {
         if (!isPlaying)   // Play
         {
-            gameObject.GetComponent<Image>().sprite = pauseIcon;
-            AVProController.Instance.PlayVideo();
+            Play();
         }
         else            // Pause
         {
-            gameObject.GetComponent<Image>().sprite = playIcon;
-            AVProController.Instance.PauseVideo();
+            Pause();
         }
-        isPlaying = !isPlaying;
     }
 
+    private void Play()
+    {
+        gameObject.GetComponent<Image>().sprite = pauseIcon;
+        AVProController.Instance.PlayVideo();
+        isPlaying = true;
+    }
+
+    private void Pause()
+    {
+        gameObject.GetComponent<Image>().sprite = playIcon;
+        AVProController.Instance.PauseVideo();
+        isPlaying = false;
+    }
 }

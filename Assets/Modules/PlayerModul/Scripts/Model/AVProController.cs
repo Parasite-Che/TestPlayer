@@ -8,7 +8,6 @@ public class AVProController : MonoBehaviour
     [SerializeField]
     private DisplayUGUI displayUGUI;
 
-
     private static AVProController instance;
 
     public static AVProController Instance {  get { return instance; } }
