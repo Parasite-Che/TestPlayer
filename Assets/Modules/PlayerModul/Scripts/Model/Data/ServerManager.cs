@@ -24,7 +24,7 @@ public class ServerManager
     }
     
     #region LoadImageFromServer(string url)
-    public static IEnumerator LoadFileFromServer(string url, string fileName, string directory) //TMP_Text loadingText, Slider bar)
+    public static IEnumerator LoadFileFromServer(string url, string fileName, string directory, IEnumerator enumerator) //TMP_Text loadingText, Slider bar)
     {
         // ссылка откуда качаем
         var wwwRequest = new UnityWebRequest(url);
@@ -67,6 +67,7 @@ public class ServerManager
             }
         }
         yield return wwwRequest;
+        yield return enumerator;
     }
     #endregion
 
