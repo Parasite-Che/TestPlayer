@@ -14,12 +14,8 @@ public class VideoListController : MonoBehaviour
     [SerializeField]
     private TMP_Text curentVideoNameObj;
 
-    private void Start()
-    {
-        Init();
-    }
 
-    private void Init()
+    public void Init()
     {
         videoList = GetChilds(transform);
 

@@ -15,7 +15,7 @@ public static class JsonController <T>
     {
 #if UNITY_EDITOR
         string _path = Application.dataPath + path;
-#elif UNITY_ANDROID
+#else
         string _path = Application.persistentDataPath + path;
 #endif
         string jsonText = JsonConvert.SerializeObject(jsonObj);
@@ -36,7 +36,7 @@ public static class JsonController <T>
     {
 #if UNITY_EDITOR
         string _path = Application.dataPath + path ;
-#elif UNITY_ANDROID
+#else
         string _path = Application.persistentDataPath + path;
 #endif
         if (File.Exists(_path + jsonName))

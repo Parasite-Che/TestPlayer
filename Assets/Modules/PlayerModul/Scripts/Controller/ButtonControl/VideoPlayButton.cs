@@ -20,7 +20,7 @@ public class VideoPlayButton : MonoBehaviour
         {
             AVProController.Instance.DisplayUGUI().CurrentMediaPlayer.OpenMedia(
             new MediaPath(VideoURL, MediaPathType.AbsolutePathOrURL),
-            autoPlay: false);
+                autoPlay: false);
             CurentVideoNameObj.text = VideoName;
         }
     }

@@ -25,7 +25,7 @@ public class FromResToObj
     {
 #if UNITY_EDITOR
         string path = Application.dataPath;
-#elif UNITY_ANDROID
+#else
         string path = Application.persistentDataPath;
 #endif
         //Debug.Log(path);

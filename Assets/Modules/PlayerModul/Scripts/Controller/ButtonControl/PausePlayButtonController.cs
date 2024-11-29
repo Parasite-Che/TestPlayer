@@ -12,7 +12,8 @@ public class PausePlayButtonController : MonoBehaviour
     [SerializeField]
     private bool isPlaying = false;
 
-    private void Start()
+
+    public void Init()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(ButtonLogic);
 
@@ -30,9 +31,9 @@ public class PausePlayButtonController : MonoBehaviour
         {
             ButtonLogic();
         }
-        else if (eventType == MediaPlayerEvent.EventType.FirstFrameReady)
+        else if (eventType == MediaPlayerEvent.EventType.Paused)
         {
-            //Pause();
+            Pause();
         }
     }
 

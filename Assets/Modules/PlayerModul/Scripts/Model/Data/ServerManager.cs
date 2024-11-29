@@ -10,7 +10,7 @@ public class ServerManager
     {
 #if UNITY_EDITOR
         string path = Application.dataPath;
-#elif UNITY_ANDROID
+#else
         string path = Application.persistentDataPath;
 #endif
         if (File.Exists(path + pathEnd))
@@ -32,7 +32,7 @@ public class ServerManager
         // тут куда качаем наш файл в системе, обязательно использовать Application.persistentDataPath
 #if UNITY_EDITOR
         string path = Application.dataPath;
-#elif UNITY_ANDROID
+#else
         string path = Application.persistentDataPath;
 #endif
         //Debug.Log(path);
